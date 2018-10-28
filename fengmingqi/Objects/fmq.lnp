@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\fengmingqi.obj" 
+TO ".\Objects\fmq" 
+PRINT(".\Listings\fmq.m51") RAMSIZE(256) 

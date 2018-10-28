@@ -1,0 +1,205 @@
+C51 COMPILER V9.54   MIAOBIAO                                                              10/23/2018 20:05:16 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MIAOBIAO
+OBJECT MODULE PLACED IN .\Objects\miaobiao.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE miaobiao.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -miaobiao.lst) TABS(2) OBJECT(.\Objects\miaobiao.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          
+   4          #define uchar unsigned char
+   5          #define dula P0
+   6          #define wela P2
+   7          
+   8          sbit k1 = P3^3; //按键1
+   9          sbit k2 = P3^4; //按键2
+  10          sbit beep = P2^3; //蜂鸣器
+  11          
+  12          bit stop = 1;
+  13          
+  14          uchar sec,min,count=0; //变量定义
+  15          uchar num[4];
+  16          uchar time_count; //计数
+  17          
+  18          uchar code weitable[]={
+  19            0x8f,0x4f,0x4f,0x1f
+  20          };
+  21          uchar code table[]={
+  22            0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,
+  23            0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71
+  24          };
+  25          
+  26          uchar code table1[]={
+  27            0xbf,0x86,0xdb,0xcf,0xe6,0xed,0xfd,0x87,0xff,0xef
+  28          };
+  29          
+  30          void delay(uchar xms)
+  31          {//延时函数
+  32   1        uchar i = 113;
+  33   1        for(;xms>0;xms--)
+  34   1          for(;i>0;i--)
+  35   1            ;
+  36   1      }
+  37          
+  38          void display1(uchar wei,uchar shu)
+  39          {
+  40   1        wei -= 1;
+  41   1        
+  42   1        wela |= 0xf0; //置1
+  43   1        
+  44   1        if(wei == 2)
+  45   1          P0 = table1[shu];
+  46   1        else
+  47   1          P0 = table[shu];
+  48   1        
+  49   1        wela = wela&weitable[wei];
+  50   1        
+  51   1        delay(5);
+  52   1      }
+  53          
+  54          void display(uchar a,uchar b,uchar c,uchar d)
+C51 COMPILER V9.54   MIAOBIAO                                                              10/23/2018 20:05:16 PAGE 2   
+
+  55          {
+  56   1        display1(4,a);
+  57   1        display1(3,b);
+  58   1        display1(2,c);
+  59   1        display1(1,d);
+  60   1      }
+  61          
+  62          void start_timer()
+  63          {
+  64   1        ET0 = 1;
+  65   1        EA = 1;
+  66   1        TR0 = 1;
+  67   1      }
+  68          void stop_timer()
+  69          {
+  70   1        ET0 = 0;
+  71   1        EA = 0;
+  72   1        TR0 = 0;
+  73   1      }
+  74          
+  75          void main()
+  76          {
+  77   1        TMOD = 0x01; //工作模式1
+  78   1        TH0 = (65536-46080)/256;
+  79   1        TL0 = (65536-46080)%256;
+  80   1        
+  81   1        while(1)
+  82   1        {
+  83   2          if(k1 == 0)
+  84   2          {
+  85   3            delay(10);
+  86   3            if(k1 == 0)
+  87   3            {
+  88   4              
+  89   4              while(k1 == 0)//按键1按下
+  90   4              {
+  91   5                  if(stop)
+  92   5                    start_timer();
+  93   5                  else
+  94   5                    stop_timer();
+  95   5                    
+  96   5                  stop = ~stop;
+  97   5                    
+  98   5                  beep = 1; //蜂鸣器响
+  99   5                  P1=0xff;
+ 100   5              }
+ 101   4              
+ 102   4            }
+ 103   3          }
+ 104   2          
+ 105   2          if(k2 == 0)
+ 106   2          {
+ 107   3            delay(10);
+ 108   3            if(k2 == 0)
+ 109   3            {
+ 110   4              while(k2 == 0)
+ 111   4              {
+ 112   5                
+ 113   5                stop_timer();
+ 114   5                stop = 1;
+ 115   5                beep = 1;
+ 116   5                P1 = 0xff;
+C51 COMPILER V9.54   MIAOBIAO                                                              10/23/2018 20:05:16 PAGE 3   
+
+ 117   5                count = 0 ;
+ 118   5                time_count = 0;
+ 119   5                sec = 0;
+ 120   5                min = 0;
+ 121   5                
+ 122   5              }
+ 123   4            }
+ 124   3            
+ 125   3          }
+ 126   2          
+ 127   2          if(stop)
+ 128   2          {
+ 129   3            count++;
+ 130   3            if(count == 100)
+ 131   3            {
+ 132   4              P1 = ~P1;
+ 133   4              
+ 134   4              count = 0;
+ 135   4            }
+ 136   3          }
+ 137   2          
+ 138   2          if(time_count == 20)
+ 139   2          {
+ 140   3            count = 0;
+ 141   3            time_count = 0;
+ 142   3            sec++;
+ 143   3            
+ 144   3            if(sec == 60)
+ 145   3            {
+ 146   4              sec = 0;
+ 147   4              min++;
+ 148   4              
+ 149   4              beep = 0;
+ 150   4              beep = 1; //蜂鸣器响
+ 151   4            }
+ 152   3            if(min == 60)
+ 153   3            {
+ 154   4              min = 0;
+ 155   4            }
+ 156   3            beep = 0;
+ 157   3            delay(10);
+ 158   3            beep = 1;
+ 159   3          }
+ 160   2          
+ 161   2          num[0]=sec%10;
+ 162   2          num[1]=sec/10;
+ 163   2          num[2]=min%10;
+ 164   2          num[3]=min/10;
+ 165   2          
+ 166   2          display(num[3],num[2],num[1],num[0]); //显示数字
+ 167   2        }
+ 168   1      } 
+ 169          
+ 170          void timer0() interrupt 1
+ 171          {
+ 172   1        TH0 = (65536-46080)/256;
+ 173   1        TL0 = (65536-46080)%256;
+ 174   1        time_count++;
+ 175   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V9.54   MIAOBIAO                                                              10/23/2018 20:05:16 PAGE 4   
+
+   CODE SIZE        =    292    ----
+   CONSTANT SIZE    =     30    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,48 @@
+C51 COMPILER V9.54   FENGMINGQI                                                            09/28/2018 09:11:30 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE FENGMINGQI
+OBJECT MODULE PLACED IN .\Objects\fengmingqi.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE fengmingqi.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\fengmingqi.lst) TABS(2) OBJECT(.\Objects\fengmingqi.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #include<intrins.h>
+   3          #include "../delay.h"
+   4          
+   5          #define on 0
+   6          #define off 1
+   7          sbit fm=P2^3;
+   8          
+   9          void main()
+  10          {
+  11   1        unsigned int time=500;
+  12   1        P1=0xfe;
+  13   1        while(1)
+  14   1        {
+  15   2          delay(time-200);
+  16   2          P1=_crol_(P1,2);
+  17   2          
+  18   2          fm=on;
+  19   2          delay(time+300);
+  20   2          fm=off;
+  21   2          
+  22   2          
+  23   2        }
+  24   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     78    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

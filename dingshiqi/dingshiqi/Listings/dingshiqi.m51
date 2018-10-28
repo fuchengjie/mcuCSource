@@ -1,0 +1,226 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        10/16/2018  19:19:08  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\dsq.obj TO .\Objects\dingshiqi PRINT (.\Listings\dingshiqi.
+>> m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\dsq.obj (DSQ)
+
+
+LINK MAP OF MODULE:  .\Objects\dingshiqi (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0041H     UNIT         ?PR?MAIN?DSQ
+            CODE    0044H     001EH     UNIT         ?PR?_DELAY?DSQ
+            CODE    0062H     0010H     UNIT         ?PR?SHOW1?DSQ
+            CODE    0072H     0010H     UNIT         ?PR?SHOW2?DSQ
+            CODE    0082H     0010H     UNIT         ?PR?SHOW3?DSQ
+            CODE    0092H     0010H     UNIT         ?PR?SHOW4?DSQ
+            CODE    00A2H     000CH     UNIT         ?C_C51STARTUP
+            CODE    00AEH     0004H     UNIT         ?CO?DSQ
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\dingshiqi (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?DSQ
+
+?PR?MAIN?DSQ
+  +--> ?PR?SHOW1?DSQ
+  +--> ?PR?SHOW2?DSQ
+  +--> ?PR?SHOW3?DSQ
+  +--> ?PR?SHOW4?DSQ
+
+?PR?SHOW1?DSQ
+  +--> ?CO?DSQ
+
+?PR?SHOW2?DSQ
+  +--> ?CO?DSQ
+
+?PR?SHOW3?DSQ
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/16/2018  19:19:08  PAGE 2
+
+
+  +--> ?CO?DSQ
+
+?PR?SHOW4?DSQ
+  +--> ?CO?DSQ
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\dingshiqi (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:00A2H         SEGMENT       ?C_C51STARTUP
+  I:0008H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:00A5H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:00A2H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:00A2H         LINE#         133
+  C:00A4H         LINE#         134
+  C:00A5H         LINE#         135
+  C:00A6H         LINE#         136
+  C:00A8H         LINE#         185
+  C:00ABH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        DSQ
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:0044H         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  B:00B0H.4       PUBLIC        k1
+  B:00B0H.5       PUBLIC        k2
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/16/2018  19:19:08  PAGE 3
+
+
+  B:00B0H.6       PUBLIC        k3
+  B:00B0H.7       PUBLIC        k4
+  C:0003H         PUBLIC        main
+  B:00A0H.4       PUBLIC        w1
+  B:00A0H.5       PUBLIC        w2
+  B:00A0H.6       PUBLIC        w3
+  B:00A0H.7       PUBLIC        w4
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00C8H         PUBLIC        T2CON
+  C:00AEH         PUBLIC        sz
+  C:0062H         PUBLIC        show1
+  C:0072H         PUBLIC        show2
+  C:0082H         PUBLIC        show3
+  C:0092H         PUBLIC        show4
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        xms
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:0044H         LINE#         18
+  C:0044H         LINE#         19
+  C:0044H         LINE#         21
+  C:004DH         LINE#         22
+  C:0061H         LINE#         23
+  -------         ENDPROC       _DELAY
+  -------         PROC          SHOW1
+  C:0062H         LINE#         26
+  C:0062H         LINE#         27
+  C:0062H         LINE#         28
+  C:0071H         LINE#         29
+  -------         ENDPROC       SHOW1
+  -------         PROC          SHOW2
+  C:0072H         LINE#         31
+  C:0072H         LINE#         32
+  C:0072H         LINE#         33
+  C:0081H         LINE#         34
+  -------         ENDPROC       SHOW2
+  -------         PROC          SHOW3
+  C:0082H         LINE#         35
+  C:0082H         LINE#         36
+  C:0082H         LINE#         37
+  C:0091H         LINE#         38
+  -------         ENDPROC       SHOW3
+  -------         PROC          SHOW4
+  C:0092H         LINE#         39
+  C:0092H         LINE#         40
+  C:0092H         LINE#         41
+  C:00A1H         LINE#         42
+  -------         ENDPROC       SHOW4
+  -------         PROC          MAIN
+  C:0003H         LINE#         49
+  C:0003H         LINE#         50
+  C:0003H         LINE#         51
+  C:0003H         LINE#         52
+  C:0003H         LINE#         53
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/16/2018  19:19:08  PAGE 4
+
+
+  C:0006H         LINE#         54
+  C:0009H         LINE#         55
+  C:0009H         LINE#         56
+  C:0009H         LINE#         57
+  C:0009H         LINE#         58
+  C:000CH         LINE#         59
+  C:0015H         LINE#         60
+  C:0015H         LINE#         61
+  C:0015H         LINE#         63
+  C:0015H         LINE#         65
+  C:0018H         LINE#         66
+  C:0018H         LINE#         67
+  C:0018H         LINE#         68
+  C:0018H         LINE#         69
+  C:001BH         LINE#         70
+  C:0024H         LINE#         71
+  C:0024H         LINE#         72
+  C:0024H         LINE#         74
+  C:0024H         LINE#         76
+  C:0027H         LINE#         77
+  C:0027H         LINE#         78
+  C:0027H         LINE#         79
+  C:0027H         LINE#         80
+  C:002AH         LINE#         81
+  C:0033H         LINE#         82
+  C:0033H         LINE#         83
+  C:0033H         LINE#         85
+  C:0033H         LINE#         87
+  C:0036H         LINE#         88
+  C:0036H         LINE#         89
+  C:0036H         LINE#         90
+  C:0036H         LINE#         91
+  C:0039H         LINE#         92
+  C:0042H         LINE#         93
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        DSQ
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?DSQ
+
+Program Size: data=9.0 xdata=0 code=178
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

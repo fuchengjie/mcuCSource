@@ -1,0 +1,289 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        10/12/2018  09:27:59  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+E:\µ¥Æ¬»ú\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\abcd.obj TO .\Objects\abcd PRINT (.\Listings\abcd.m51) RAMSI
+>> ZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\abcd.obj (ABCD)
+
+
+LINK MAP OF MODULE:  .\Objects\abcd (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0002H     UNIT         _DATA_GROUP_
+            IDATA   000AH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     009EH     UNIT         ?PR?XUNHUAN?ABCD
+            CODE    089EH     0042H     UNIT         ?PR?_DELAY?ABCD
+            CODE    08E0H     0028H     UNIT         ?PR?BUXUNHUAN?ABCD
+            CODE    0908H     0010H     UNIT         ?PR?DISPLAYA?ABCD
+            CODE    0918H     0010H     UNIT         ?PR?DISPLAYB?ABCD
+            CODE    0928H     0010H     UNIT         ?PR?DISPLAYC?ABCD
+            CODE    0938H     0010H     UNIT         ?PR?DISPLAYD?ABCD
+            CODE    0948H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0954H     000CH     UNIT         ?PR?DISPLAYZERO?ABCD
+            CODE    0960H     000AH     UNIT         ?PR?MAIN?ABCD
+            CODE    096AH     0004H     UNIT         ?CO?ABCD
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\abcd (?C_STARTUP)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?ABCD
+
+?PR?MAIN?ABCD                  0008H    0002H
+  +--> ?PR?XUNHUAN?ABCD
+
+?PR?XUNHUAN?ABCD               -----    -----
+  +--> ?PR?DISPLAYA?ABCD
+  +--> ?PR?_DELAY?ABCD
+  +--> ?PR?DISPLAYB?ABCD
+  +--> ?PR?DISPLAYC?ABCD
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/12/2018  09:27:59  PAGE 2
+
+
+  +--> ?PR?DISPLAYD?ABCD
+  +--> ?CO?ABCD
+
+?PR?DISPLAYA?ABCD              -----    -----
+  +--> ?CO?ABCD
+
+?PR?DISPLAYB?ABCD              -----    -----
+  +--> ?CO?ABCD
+
+?PR?DISPLAYC?ABCD              -----    -----
+  +--> ?CO?ABCD
+
+?PR?DISPLAYD?ABCD              -----    -----
+  +--> ?CO?ABCD
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\abcd (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0948H         SEGMENT       ?C_C51STARTUP
+  I:000AH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:094BH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0948H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0948H         LINE#         133
+  C:094AH         LINE#         134
+  C:094BH         LINE#         135
+  C:094CH         LINE#         136
+  C:094EH         LINE#         185
+  C:0951H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        ABCD
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/12/2018  09:27:59  PAGE 3
+
+
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0800H         PUBLIC        xunhuan
+  D:00A8H         PUBLIC        IE
+  C:08C2H         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  C:0954H         PUBLIC        displayZero
+  C:0960H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0908H         PUBLIC        displayA
+  C:0918H         PUBLIC        displayB
+  C:0928H         PUBLIC        displayC
+  C:0938H         PUBLIC        displayD
+  C:08E0H         PUBLIC        buxunhuan
+  D:00C8H         PUBLIC        T2CON
+  C:096AH         PUBLIC        sz
+  B:00A0H.4       PUBLIC        wei1
+  B:00A0H.5       PUBLIC        wei2
+  B:00A0H.6       PUBLIC        wei3
+  B:00A0H.7       PUBLIC        wei4
+  D:00D0H         PUBLIC        PSW
+  C:08B2H         SYMBOL        L?0021
+  C:08BAH         SYMBOL        L?0022
+  C:08BCH         SYMBOL        L?0023
+  C:08BEH         SYMBOL        L?0024
+  -------         PROC          L?0020
+  -------         ENDPROC       L?0020
+  C:08B2H         SYMBOL        L?0021
+  C:08BAH         SYMBOL        L?0022
+  C:08BCH         SYMBOL        L?0023
+  C:08BEH         SYMBOL        L?0024
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        xms
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:08C2H         LINE#         17
+  C:08C2H         LINE#         18
+  C:08C2H         LINE#         20
+  C:08CBH         LINE#         21
+  C:08DFH         LINE#         22
+  -------         ENDPROC       _DELAY
+  -------         PROC          DISPLAYA
+  C:0908H         LINE#         24
+  C:0908H         LINE#         25
+  C:0908H         LINE#         26
+  C:090FH         LINE#         27
+  C:0911H         LINE#         28
+  C:0913H         LINE#         29
+  C:0915H         LINE#         30
+  C:0917H         LINE#         31
+  -------         ENDPROC       DISPLAYA
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/12/2018  09:27:59  PAGE 4
+
+
+  -------         PROC          DISPLAYB
+  C:0918H         LINE#         32
+  C:0918H         LINE#         33
+  C:0918H         LINE#         34
+  C:091FH         LINE#         35
+  C:0921H         LINE#         36
+  C:0923H         LINE#         37
+  C:0925H         LINE#         38
+  C:0927H         LINE#         39
+  -------         ENDPROC       DISPLAYB
+  -------         PROC          DISPLAYC
+  C:0928H         LINE#         40
+  C:0928H         LINE#         41
+  C:0928H         LINE#         42
+  C:092FH         LINE#         43
+  C:0931H         LINE#         44
+  C:0933H         LINE#         45
+  C:0935H         LINE#         46
+  C:0937H         LINE#         47
+  -------         ENDPROC       DISPLAYC
+  -------         PROC          DISPLAYD
+  C:0938H         LINE#         48
+  C:0938H         LINE#         49
+  C:0938H         LINE#         50
+  C:093FH         LINE#         51
+  C:0941H         LINE#         52
+  C:0943H         LINE#         53
+  C:0945H         LINE#         54
+  C:0947H         LINE#         55
+  -------         ENDPROC       DISPLAYD
+  -------         PROC          BUXUNHUAN
+  C:08E0H         LINE#         56
+  C:08E0H         LINE#         57
+  C:08E0H         LINE#         60
+  C:08E3H         LINE#         61
+  C:08EAH         LINE#         64
+  C:08EDH         LINE#         65
+  C:08F4H         LINE#         68
+  C:08F7H         LINE#         69
+  C:08FEH         LINE#         72
+  C:0901H         LINE#         73
+  -------         ENDPROC       BUXUNHUAN
+  -------         PROC          XUNHUAN
+  -------         DO            
+  D:0002H         SYMBOL        time
+  -------         ENDDO         
+  C:0800H         LINE#         78
+  C:0800H         LINE#         79
+  C:0800H         LINE#         80
+  C:0804H         LINE#         82
+  C:080AH         LINE#         83
+  C:0810H         LINE#         84
+  C:0816H         LINE#         85
+  C:081CH         LINE#         88
+  C:081FH         LINE#         89
+  C:0822H         LINE#         90
+  C:0830H         LINE#         91
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/12/2018  09:27:59  PAGE 5
+
+
+  C:0842H         LINE#         94
+  C:0845H         LINE#         95
+  C:0848H         LINE#         96
+  C:0858H         LINE#         97
+  C:0868H         LINE#         100
+  C:0876H         LINE#         101
+  C:087CH         LINE#         102
+  C:088AH         LINE#         103
+  -------         ENDPROC       XUNHUAN
+  -------         PROC          DISPLAYZERO
+  C:0954H         LINE#         108
+  C:0954H         LINE#         109
+  C:0954H         LINE#         110
+  C:0957H         LINE#         111
+  C:0959H         LINE#         112
+  C:095BH         LINE#         113
+  C:095DH         LINE#         114
+  C:095FH         LINE#         115
+  -------         ENDPROC       DISPLAYZERO
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        i
+  -------         ENDDO         
+  C:0960H         LINE#         117
+  C:0960H         LINE#         118
+  C:0960H         LINE#         119
+  C:0965H         LINE#         120
+  C:0965H         LINE#         121
+  C:0965H         LINE#         125
+  C:0968H         LINE#         131
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        ABCD
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?BUXUNHUAN?ABCD
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DISPLAYZERO?ABCD
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0171H BYTE (18%) *
+******************************************************************************
+
+Program Size: data=11.0 xdata=0 code=369
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)

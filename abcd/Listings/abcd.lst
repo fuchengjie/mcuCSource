@@ -1,0 +1,168 @@
+C51 COMPILER V9.52.0.0   ABCD                                                              10/12/2018 09:27:58 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE ABCD
+OBJECT MODULE PLACED IN .\Objects\abcd.obj
+COMPILER INVOKED BY: E:\单片机\C51\BIN\C51.EXE abcd.c BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\abcd.lst) TABS(2) OBJEC
+                    -T(.\Objects\abcd.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #define uchar unsigned char
+   3          #define duan P0
+   4          
+   5          uchar code sz[4]={0x77,0x7c,0x39,0x5e};
+   6            
+   7          sbit k1=P3^4;
+   8          sbit k2=P3^5;
+   9          sbit k3=P3^6;
+  10          sbit k4=P3^7;
+  11          
+  12          sbit wei1=P2^4; 
+  13          sbit wei2=P2^5;
+  14          sbit wei3=P2^6; 
+  15          sbit wei4=P2^7; 
+  16          
+  17          void delay(unsigned int xms)
+  18          {
+  19   1        unsigned int i,j;
+  20   1        for(i=xms;i>0;i--)
+  21   1          for(j=112;j>0;j--);
+  22   1      }
+  23          
+  24          void displayA()
+  25          {
+  26   1        duan=sz[0];
+  27   1        wei1=1;
+  28   1        wei2=0;
+  29   1        wei3=0;
+  30   1        wei4=0;
+  31   1      }
+  32          void displayB()
+  33          {
+  34   1        duan=sz[1];
+  35   1        wei1=0;
+  36   1        wei2=1;
+  37   1        wei3=0;
+  38   1        wei4=0;
+  39   1      }
+  40          void displayC()
+  41          {
+  42   1        duan=sz[2];
+  43   1        wei1=0;
+  44   1        wei2=0;
+  45   1        wei3=1;
+  46   1        wei4=0;
+  47   1      }
+  48          void displayD()
+  49          {
+  50   1        duan=sz[3];
+  51   1        wei1=0;
+  52   1        wei2=0;
+  53   1        wei3=0;
+  54   1        wei4=1;
+C51 COMPILER V9.52.0.0   ABCD                                                              10/12/2018 09:27:58 PAGE 2   
+
+  55   1      }
+  56          void buxunhuan()
+  57          {
+  58   1        
+  59   1      
+  60   1        displayA();
+  61   1        delay(1);
+  62   1        //显示A
+  63   1        
+  64   1        displayB();
+  65   1        delay(1);
+  66   1        //显示B
+  67   1        
+  68   1        displayC();
+  69   1        delay(1);
+  70   1        //显示C
+  71   1        
+  72   1        displayD();
+  73   1        delay(1);
+  74   1        //显示D
+  75   1        
+  76   1        
+  77   1      } 
+  78          void xunhuan()
+  79          {
+  80   1        int time=100;
+  81   1        
+  82   1        displayA();delay(time);
+  83   1        displayB();delay(time);
+  84   1        displayC();delay(time);
+  85   1        displayD();delay(time);
+  86   1        
+  87   1        
+  88   1        duan=sz[1]; wei1=1; wei2=0; wei3=0; wei4=0;delay(time);
+  89   1        duan=sz[2]; wei1=0; wei2=1; wei3=0; wei4=0;delay(time);
+  90   1        duan=sz[3]; wei1=0; wei2=0; wei3=1; wei4=0;delay(time);
+  91   1        duan=sz[0]; wei1=0; wei2=0; wei3=0; wei4=1;delay(time);
+  92   1        
+  93   1        
+  94   1        duan=sz[2]; wei1=1; wei2=0; wei3=0; wei4=0;delay(time);
+  95   1        duan=sz[3]; wei1=0; wei2=1; wei3=0; wei4=0;delay(time);
+  96   1        duan=sz[0]; wei1=0; wei2=0; wei3=1; wei4=0;delay(time);
+  97   1        duan=sz[1]; wei1=0; wei2=0; wei3=0; wei4=1;delay(time);
+  98   1        
+  99   1        
+ 100   1        duan=sz[3]; wei1=1; wei2=0; wei3=0; wei4=0;delay(time);
+ 101   1        duan=sz[0]; wei1=0; wei2=1; wei3=0; wei4=0;delay(time);
+ 102   1        duan=sz[1]; wei1=0; wei2=0; wei3=1; wei4=0;delay(time);
+ 103   1        duan=sz[2]; wei1=0; wei2=0; wei3=0; wei4=1;delay(time);
+ 104   1        
+ 105   1        
+ 106   1        
+ 107   1      } 
+ 108          void displayZero()
+ 109          {
+ 110   1        duan=0x00;
+ 111   1        wei1=1;
+ 112   1        wei2=1;
+ 113   1        wei3=1;
+ 114   1        wei4=1;
+ 115   1      }
+ 116          
+C51 COMPILER V9.52.0.0   ABCD                                                              10/12/2018 09:27:58 PAGE 3   
+
+ 117          void main()
+ 118          {
+ 119   1        int i=0;
+ 120   1        while(1)
+ 121   1        {
+ 122   2          
+ 123   2          //buxunhuan();
+ 124   2          
+ 125   2          xunhuan();
+ 126   2          
+ 127   2          
+ 128   2            
+ 129   2          
+ 130   2          
+ 131   2        }
+ 132   1        
+ 133   1        
+ 134   1      }
+ 135          
+ 136          
+ 137          
+ 138            
+ 139            
+ 140            
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    350    ----
+   CONSTANT SIZE    =      4    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

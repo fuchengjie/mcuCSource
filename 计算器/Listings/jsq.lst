@@ -1,0 +1,409 @@
+C51 COMPILER V9.54   JSQ                                                                   11/02/2018 09:25:54 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE JSQ
+OBJECT MODULE PLACED IN .\Objects\jsq.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE jsq.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\jsq.l
+                    -st) TABS(2) OBJECT(.\Objects\jsq.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          
+   6          sbit wei1=P2^4;
+   7          sbit wei2=P2^5;
+   8          sbit wei3=P2^6;
+   9          sbit wei4=P2^7;
+  10          
+  11          uchar code table[17]={
+  12            0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,
+  13            0x07,0x7f,0x6f,0x77,0x7c,0x39,
+  14            0x5e,0x79,0x71,0x00
+  15          };
+  16          
+  17          
+  18          /////////////秒表的程序
+  19          uchar code t[]={
+  20            0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,
+  21            0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71
+  22          };
+  23          
+  24          uchar code t1[]={
+  25            0xbf,0x86,0xdb,0xcf,0xe6,0xed,0xfd,0x87,0xff,0xef
+  26          };
+  27          uchar code weitable[]={
+  28            0x8f,0x4f,0x4f,0x1f
+  29          };
+  30          
+  31          //////////////////
+  32          enum state{jia,jian,chen,chu}keyState;//按下哪运算键
+  33            
+  34          int inputNum1=0,inputNum2=0,outputNum;
+  35          
+  36          int isYunSuan=0;
+  37          
+  38          void delay(uchar xms)
+  39          {
+  40   1        uchar j;
+  41   1        for(;xms>0;xms--)
+  42   1          for(j=112;j>0;j--)
+  43   1            ;
+  44   1      }
+  45          
+  46          void dis1(uint wei,uint shu)
+  47          {
+  48   1        wei -= 1;
+  49   1        
+  50   1        P2 |= 0xc0; //?1
+  51   1        
+  52   1        if(wei == 2)
+  53   1          P0 = table[shu];
+  54   1        else
+C51 COMPILER V9.54   JSQ                                                                   11/02/2018 09:25:54 PAGE 2   
+
+  55   1          P0 = table[shu];
+  56   1        
+  57   1        P2 =P2&weitable[wei];
+  58   1        wei1=1;
+  59   1          wei2=1;
+  60   1          wei3=0;
+  61   1          wei4=0;
+  62   1        delay(5);
+  63   1      }
+  64          
+  65          void dis(uint a,uint b,uint c,uint d)
+  66          {
+  67   1        dis1(4,a);
+  68   1        dis1(3,b);
+  69   1        dis1(2,c);
+  70   1        dis1(1,d);
+  71   1      }
+  72          
+  73          
+  74          
+  75          void display(uint num)
+  76          {
+  77   1        if(num<10)
+  78   1        {
+  79   2          wei1=1;
+  80   2          wei2=0;
+  81   2          wei3=0;
+  82   2          wei4=0;
+  83   2          P0=table[num];
+  84   2        }
+  85   1          
+  86   1        else{
+  87   2          wei1=1;
+  88   2          wei2=1;
+  89   2          wei3=0;
+  90   2          wei4=0;
+  91   2          
+  92   2          dis(2,3,0,0);
+  93   2        }
+  94   1        
+  95   1        
+  96   1      }
+  97          
+  98          void keyscan()
+  99          {
+ 100   1        uchar temp,key;
+ 101   1        
+ 102   1      //  inputNum1=0;
+ 103   1      //  inputNum2=0;
+ 104   1        
+ 105   1        P3=0xfe;
+ 106   1        temp=P3;
+ 107   1        temp&=0xf0;
+ 108   1        
+ 109   1        if(temp!=0xf0)
+ 110   1        {
+ 111   2          delay(10);
+ 112   2          temp=P3;
+ 113   2          temp&=0xf0;
+ 114   2          
+ 115   2          if(temp!=0xf0)
+ 116   2          {
+C51 COMPILER V9.54   JSQ                                                                   11/02/2018 09:25:54 PAGE 3   
+
+ 117   3            temp=P3;
+ 118   3            switch(temp)
+ 119   3            {
+ 120   4              //第一排
+ 121   4              case 0xee:
+ 122   4                key=1;
+ 123   4                if(isYunSuan==0){
+ 124   5                  inputNum1+=key;
+ 125   5                }
+ 126   4                if(isYunSuan==1){
+ 127   5                  inputNum2+=key;
+ 128   5                }
+ 129   4                break;
+ 130   4              case 0xde:
+ 131   4                key=2;
+ 132   4                if(isYunSuan==0){
+ 133   5                  inputNum1+=key;
+ 134   5                }
+ 135   4                if(isYunSuan==1){
+ 136   5                  inputNum2+=key;
+ 137   5                }
+ 138   4                break;
+ 139   4              case 0xbe:
+ 140   4                key=3;
+ 141   4                if(isYunSuan==0){
+ 142   5                  inputNum1+=key;
+ 143   5                }
+ 144   4                if(isYunSuan==1){
+ 145   5                  inputNum2+=key;
+ 146   5                }
+ 147   4                break;
+ 148   4              case 0x7e:
+ 149   4                keyState=jia;
+ 150   4                isYunSuan=1;
+ 151   4                key=10;break;
+ 152   4            }
+ 153   3            
+ 154   3            while(temp!=0xf0)
+ 155   3            {
+ 156   4              temp=P3;
+ 157   4              temp&=0xf0;
+ 158   4            }
+ 159   3            display(key);
+ 160   3          }
+ 161   2          
+ 162   2        }
+ 163   1        
+ 164   1        P3=0xfd;
+ 165   1        temp=P3;
+ 166   1        temp&=0xf0;
+ 167   1        
+ 168   1        if(temp!=0xf0)
+ 169   1        {
+ 170   2          delay(10);
+ 171   2          temp=P3;
+ 172   2          temp&=0xf0;
+ 173   2          
+ 174   2          if(temp!=0xf0)
+ 175   2          {
+ 176   3            temp=P3;
+ 177   3            switch(temp)
+ 178   3            {
+C51 COMPILER V9.54   JSQ                                                                   11/02/2018 09:25:54 PAGE 4   
+
+ 179   4            
+ 180   4              //第二排
+ 181   4              case 0xed:
+ 182   4                key=4;
+ 183   4                if(isYunSuan==0){
+ 184   5                  inputNum1+=key;
+ 185   5                }
+ 186   4                if(isYunSuan==1){
+ 187   5                  inputNum2+=key;
+ 188   5                }
+ 189   4                break;
+ 190   4              case 0xdd:
+ 191   4                key=5;
+ 192   4                if(isYunSuan==0){
+ 193   5                  inputNum1+=key;
+ 194   5                }
+ 195   4                if(isYunSuan==1){
+ 196   5                  inputNum2+=key;
+ 197   5                }
+ 198   4                break;
+ 199   4              case 0xbd:
+ 200   4                key=6;
+ 201   4                if(isYunSuan==0){
+ 202   5                  inputNum1+=key;
+ 203   5                }
+ 204   4                if(isYunSuan==1){
+ 205   5                  inputNum2+=key;
+ 206   5                }
+ 207   4                break;
+ 208   4              case 0x7d:
+ 209   4                key=11;
+ 210   4                keyState=jian;
+ 211   4                isYunSuan=1;
+ 212   4                break;
+ 213   4              
+ 214   4            }
+ 215   3            
+ 216   3            while(temp!=0xf0)
+ 217   3            {
+ 218   4              temp=P3;
+ 219   4              temp&=0xf0;
+ 220   4            }
+ 221   3            display(key);
+ 222   3          }
+ 223   2          
+ 224   2        }
+ 225   1        
+ 226   1        P3=0xfb;
+ 227   1        temp=P3;
+ 228   1        temp&=0xf0;
+ 229   1        
+ 230   1        if(temp!=0xf0)
+ 231   1        {
+ 232   2          delay(10);
+ 233   2          temp=P3;
+ 234   2          temp&=0xf0;
+ 235   2          
+ 236   2          if(temp!=0xf0)
+ 237   2          {
+ 238   3            temp=P3;
+ 239   3            switch(temp)
+ 240   3            {
+C51 COMPILER V9.54   JSQ                                                                   11/02/2018 09:25:54 PAGE 5   
+
+ 241   4              
+ 242   4              //第三排
+ 243   4              case 0xeb:
+ 244   4                key=7;
+ 245   4                if(isYunSuan==0){
+ 246   5                  inputNum1+=key;
+ 247   5                }
+ 248   4                if(isYunSuan==1){
+ 249   5                  inputNum2+=key;
+ 250   5                }
+ 251   4                break;
+ 252   4              case 0xdb:
+ 253   4                key=8;
+ 254   4                if(isYunSuan==0){
+ 255   5                  inputNum1+=key;
+ 256   5                }
+ 257   4                if(isYunSuan==1){
+ 258   5                  inputNum2+=key;
+ 259   5                }
+ 260   4                break;
+ 261   4              case 0xbb:
+ 262   4                key=9;
+ 263   4                if(isYunSuan==0){
+ 264   5                  inputNum1+=key;
+ 265   5                }
+ 266   4                if(isYunSuan==1){
+ 267   5                  inputNum2+=key;
+ 268   5                }
+ 269   4                break;
+ 270   4              case 0x7b:
+ 271   4                key=12;
+ 272   4                keyState=chen;
+ 273   4                isYunSuan=1;
+ 274   4                break;
+ 275   4            }
+ 276   3            
+ 277   3            while(temp!=0xf0)
+ 278   3            {
+ 279   4              temp=P3;
+ 280   4              temp&=0xf0;
+ 281   4            }
+ 282   3            display(key);
+ 283   3          }
+ 284   2          
+ 285   2        }
+ 286   1        
+ 287   1        P3=0xf7;
+ 288   1        temp=P3;
+ 289   1        temp&=0xf0;
+ 290   1        
+ 291   1        if(temp!=0xf0)
+ 292   1        {
+ 293   2          delay(10);
+ 294   2          temp=P3;
+ 295   2          temp&=0xf0;
+ 296   2          
+ 297   2          if(temp!=0xf0)
+ 298   2          {
+ 299   3            temp=P3;
+ 300   3            switch(temp)
+ 301   3            {
+ 302   4              
+C51 COMPILER V9.54   JSQ                                                                   11/02/2018 09:25:54 PAGE 6   
+
+ 303   4              //第4排
+ 304   4              case 0xe7:
+ 305   4                inputNum1=0;
+ 306   4                inputNum2=0;
+ 307   4                isYunSuan=0;
+ 308   4                key=0;
+ 309   4                
+ 310   4              break;
+ 311   4              case 0xd7:
+ 312   4                key=0;break;
+ 313   4              case 0xb7:
+ 314   4                key=9;
+ 315   4                
+ 316   4                isYunSuan=2;
+ 317   4                break;
+ 318   4              case 0x77:
+ 319   4                key=13;
+ 320   4                keyState=chu;
+ 321   4                isYunSuan=1;
+ 322   4                break;
+ 323   4            }
+ 324   3            
+ 325   3            while(temp!=0xf0)
+ 326   3            {
+ 327   4              temp=P3;
+ 328   4              temp&=0xf0;
+ 329   4            }
+ 330   3            display(key);
+ 331   3          }
+ 332   2          
+ 333   2        }
+ 334   1        
+ 335   1        
+ 336   1      }
+ 337          
+ 338          
+ 339          void main()
+ 340          {
+ 341   1        P2 |= 0xf0;
+ 342   1        
+ 343   1        //显示器选择哪些亮
+ 344   1        wei1=1;
+ 345   1        wei2=0;
+ 346   1        wei3=0;
+ 347   1        wei4=0;
+ 348   1        
+ 349   1        while(1)
+ 350   1        {
+ 351   2          keyscan();
+ 352   2          
+ 353   2          //判断运算符，并输出运算结果
+ 354   2          if(isYunSuan==2&&keyState==jia){
+ 355   3            outputNum=inputNum1+inputNum2;
+ 356   3            display(outputNum);
+ 357   3          }
+ 358   2          if(isYunSuan==2&&keyState==jian){
+ 359   3            outputNum=inputNum1-inputNum2;
+ 360   3            display(outputNum);
+ 361   3          }
+ 362   2          if(isYunSuan==2&&keyState==chen){
+ 363   3            outputNum=inputNum1*inputNum2;
+ 364   3            display(outputNum);
+C51 COMPILER V9.54   JSQ                                                                   11/02/2018 09:25:54 PAGE 7   
+
+ 365   3          }
+ 366   2          if(isYunSuan==2&&keyState==chu){
+ 367   3            outputNum=inputNum1/inputNum2;
+ 368   3            display(outputNum);
+ 369   3          }
+ 370   2        }
+ 371   1        
+ 372   1      }
+ 373          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1000    ----
+   CONSTANT SIZE    =     47    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
